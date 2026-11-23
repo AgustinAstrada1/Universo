@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Codificación y adaptación a celulares -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Un rinconcito del universo creado solamente para vos, Titi ❤️">
+  <meta name="theme-color" content="#1b1f3f">
+  <title>Un pequeño universo para mi amorr ❤️</title>
+
+  <!-- Tipografías delicadas (si no hay internet, se usan las del sistema) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos del proyecto -->
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       MÚSICA DE FONDO
+       El archivo debe estar en: audio/cancion.mp3
+       Sin controles visibles: se controla desde js/app.js
+       ============================================================ -->
+  <audio id="musica" loop preload="auto">
+    <source src="audio/cancion.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ============================================================
+       1) PANTALLA DE BIENVENIDA
+       ============================================================ -->
+  <section id="bienvenida" class="pantalla-bienvenida" aria-labelledby="titulo-bienvenida">
+    <div class="contenido-bienvenida">
+      <div class="luna-decorativa" aria-hidden="true"></div>
+
+      <h1 id="titulo-bienvenida" class="titulo-bienvenida">
+        Bienvenida a un pequeño universo, Titi ❤️
+      </h1>
+
+      <p class="subtitulo-bienvenida">
+        Un rinconcito del universo que cree solo para vos.
+      </p>
+
+      <!-- Botón principal: entra al universo y da permiso para la música -->
+      <button id="btn-entrar" class="btn btn-entrar" type="button">
+        Entrar al universo ✨
+      </button>
+
+      <!-- Solo aparece si el navegador bloqueó la reproducción automática -->
+      <button id="btn-activar-musica" class="btn btn-musica-suave" type="button" hidden>
+        Activa la canción ♫
+      </button>
+
+      <!-- Solo aparece si falta el archivo audio/cancion.mp3 -->
+      <p id="aviso-audio" class="aviso-audio" hidden>
+        No encuentro el archivo audio/cancion.mp3
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       2) UNIVERSO INTERACTIVO (sección principal)
+       ============================================================ -->
+  <main id="universo" class="universo" aria-label="Universo interactivo">
+
+    <div id="cielo" class="cielo">
+
+      <!-- Nebulosas suaves de fondo -->
+      <div class="nebulosa nebulosa-1" aria-hidden="true"></div>
+      <div class="nebulosa nebulosa-2" aria-hidden="true"></div>
+      <div class="nebulosa nebulosa-3" aria-hidden="true"></div>
+
+      <!-- Nubes delicadas -->
+      <div class="nube nube-1" aria-hidden="true"></div>
+      <div class="nube nube-2" aria-hidden="true"></div>
+      <div class="nube nube-3" aria-hidden="true"></div>
+
+      <!-- Pequeños planetas -->
+      <div class="planeta planeta-1" aria-hidden="true"></div>
+      <div class="planeta planeta-2" aria-hidden="true"></div>
+      <div class="planeta planeta-3" aria-hidden="true"></div>
+
+      <!-- Luna grande: al tocarla aparece un mensaje especial -->
+      <button id="luna" class="luna" type="button" aria-label="Luna mágica: toca para leer un mensaje especial"></button>
+
+      <!-- Estrellas decorativas (las genera js/app.js) -->
+      <div id="capa-estrellas" class="capa" aria-hidden="true"></div>
+
+      <!-- Estrellas interactivas (las genera js/app.js) -->
+      <div id="estrellas-interactivas" class="capa capa-interactiva"></div>
+
+      <!-- Corazones flotantes (los genera js/app.js) -->
+      <div id="capa-corazones" class="capa" aria-hidden="true"></div>
+
+      <!-- Estrellas fugaces (las genera js/app.js) -->
+      <div id="capa-fugaces" class="capa" aria-hidden="true"></div>
+    </div>
+
+    <!-- ============================================================
+         3) MENSAJE FINAL, integrado en la parte inferior del universo
+         ============================================================ -->
+    <footer class="mensaje-final">
+      <p class="frase-final">
+        De todos los universos posibles, qué suerte la mía de coincidir con vos.
+        <span class="latido" aria-hidden="true">❤️</span>
+      </p>
+      <p class="firma-final">Con todo mi corazon para vos.</p>
+    </footer>
+  </main>
+
+  <!-- ============================================================
+       TARJETA DE MENSAJES (se reutiliza para estrellas y la luna)
+       Se cierra tocando el botón ✕, tocando fuera o con la tecla Esc
+       ============================================================ -->
+  <div id="overlay" class="overlay" hidden>
+    <article id="tarjeta" class="tarjeta" role="dialog" aria-modal="true" aria-labelledby="tarjeta-texto">
+      <button class="tarjeta-cerrar" type="button" aria-label="Cerrar mensaje">✕</button>
+      <div id="tarjeta-texto" class="tarjeta-texto"></div>
+    </article>
+  </div>
+
+  <!-- ============================================================
+       BOTÓN FLOTANTE DE MÚSICA (activa / pausa / reanuda)
+       ============================================================ -->
+  <button id="btn-musica" class="btn-musica" type="button" aria-label="Reproducir o pausar la música" aria-pressed="false" title="Nuestra canción">
+    <span class="icono-musica" aria-hidden="true">♪</span>
+  </button>
+
+  <!-- Lógica del proyecto -->
+  <script src="js/app.js"></script>
+</body>
+</html>

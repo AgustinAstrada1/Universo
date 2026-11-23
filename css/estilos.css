@@ -1,0 +1,836 @@
+/* =========================================================
+   UN UNIVERSO PARA TITI · css/estilos.css
+   Paleta: rosa pastel, lavanda, lila, azul noche suave y blanco cálido.
+   Todo usa unidades relativas (%, vw, vh, dvh, clamp, rem) para
+   adaptarse a celulares, tablets y computadoras.
+   ========================================================= */
+
+
+/* ---------- 0. VARIABLES DE COLOR (fáciles de cambiar) ---------- */
+:root {
+  --rosa: #ffd1e3;
+  --rosa-fuerte: #ff9ec7;
+  --lavanda: #dcc8ff;
+  --lila: #b8a2e6;
+  --azul-noche: #1b1f3f;
+  --azul-noche-2: #2a2f5c;
+  --blanco: #fff7f1;
+  --texto: #4a3b63;
+  --sombra-suave: 0 10px 30px rgba(120, 80, 160, 0.25);
+}
+
+
+/* ---------- 1. RESET Y BASE ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Quicksand', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--blanco);
+  background: linear-gradient(180deg, var(--azul-noche) 0%, #2d2a5e 55%, #4a3b7a 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;               /* Evita desplazamientos horizontales */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hace que el atributo hidden siempre oculte el elemento */
+[hidden] {
+  display: none !important;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;       /* Respuesta más rápida al tocar */
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+button:focus-visible {
+  outline: 2px dashed var(--rosa);
+  outline-offset: 4px;
+}
+
+
+/* ---------- 2. PANTALLA DE BIENVENIDA ---------- */
+.pantalla-bienvenida {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, #3b3a72 0%, var(--azul-noche) 70%);
+  transition: opacity 1.1s ease, transform 1.1s ease, visibility 1.1s;
+}
+
+/* Transición suave hacia el universo */
+.pantalla-bienvenida.saliendo {
+  opacity: 0;
+  transform: scale(1.06);
+  pointer-events: none;
+}
+
+.pantalla-bienvenida.oculta {
+  visibility: hidden;
+}
+
+.contenido-bienvenida {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(12px, 2.5vh, 22px);
+  max-width: min(90vw, 520px);
+  text-align: center;
+  animation: aparecer 1.6s ease both;
+}
+
+/* Luna decorativa de la bienvenida */
+.luna-decorativa {
+  width: clamp(70px, 18vw, 110px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fffaf3 0%, #ffe9f3 55%, #f5cde3 100%);
+  box-shadow: 0 0 40px rgba(255, 190, 225, 0.6), 0 0 90px rgba(200, 170, 255, 0.35);
+  animation: flotar 6s ease-in-out infinite;
+}
+
+.titulo-bienvenida {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  line-height: 1.2;
+  color: #ffe3f0;
+  text-shadow: 0 2px 18px rgba(255, 150, 200, 0.5);
+  overflow-wrap: break-word;
+}
+
+.subtitulo-bienvenida {
+  font-size: clamp(1rem, 3.8vw, 1.2rem);
+  color: #e8dcff;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+/* Botones generales (sutil animación al pasar el cursor o tocar) */
+.btn {
+  min-height: 48px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: clamp(1rem, 3.8vw, 1.1rem);
+  color: #5a3f78;
+  background: linear-gradient(135deg, #ffd6ea, #e3d1ff);
+  box-shadow: 0 8px 24px rgba(255, 170, 220, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 32px rgba(255, 170, 220, 0.55);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-entrar {
+  animation: latido-suave 3.5s ease-in-out infinite;
+}
+
+/* Botón delicado si el navegador bloquea el audio automático */
+.btn-musica-suave {
+  min-height: 42px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  color: #ffd6ea;
+  background: transparent;
+  border: 1px solid rgba(255, 214, 234, 0.5);
+  box-shadow: none;
+  animation: aparecer 0.8s ease both;
+}
+
+.btn-musica-suave:hover,
+.btn-musica-suave:focus-visible {
+  background: rgba(255, 214, 234, 0.12);
+  box-shadow: 0 0 18px rgba(255, 190, 225, 0.35);
+}
+
+.aviso-audio {
+  font-size: 0.85rem;
+  color: #ffc2dc;
+  opacity: 0.85;
+}
+
+
+/* ---------- 3. UNIVERSO ---------- */
+.universo {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+
+.universo.visible {
+  opacity: 1;
+}
+
+/* Fondo del cielo: ocupa todo el universo */
+.cielo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, #1b1f3f 0%, #262a58 45%, #3a3170 75%, #4b3a7e 100%);
+}
+
+/* Capas que no bloquean los toques (salvo las estrellas interactivas) */
+.capa {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.capa-interactiva {
+  z-index: 3;
+}
+
+
+/* ---- 3.1 Nebulosas suaves ---- */
+.nebulosa {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.6;
+  animation: respirar 14s ease-in-out infinite;
+}
+
+.nebulosa-1 {
+  width: 70%;
+  aspect-ratio: 1;
+  left: -20%;
+  top: -10%;
+  background: radial-gradient(circle, rgba(255, 160, 210, 0.35), transparent 65%);
+}
+
+.nebulosa-2 {
+  width: 80%;
+  aspect-ratio: 1;
+  right: -25%;
+  top: 25%;
+  background: radial-gradient(circle, rgba(170, 140, 255, 0.35), transparent 65%);
+  animation-delay: -5s;
+}
+
+.nebulosa-3 {
+  width: 90%;
+  aspect-ratio: 1;
+  left: 10%;
+  bottom: -25%;
+  background: radial-gradient(circle, rgba(255, 200, 230, 0.25), transparent 65%);
+  animation-delay: -9s;
+}
+
+
+/* ---- 3.2 Nubes delicadas (formadas con pseudo-elementos) ---- */
+.nube {
+  position: absolute;
+  width: clamp(120px, 28vw, 220px);
+  aspect-ratio: 2.6 / 1;
+  border-radius: 999px;
+  background: rgba(255, 240, 250, 0.1);
+  box-shadow: 0 0 30px rgba(255, 230, 250, 0.15);
+  pointer-events: none;
+  animation: deslizar 40s ease-in-out infinite alternate;
+}
+
+.nube::before,
+.nube::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.nube::before {
+  width: 55%;
+  height: 130%;
+  left: 15%;
+  top: -60%;
+}
+
+.nube::after {
+  width: 42%;
+  height: 95%;
+  left: 52%;
+  top: -40%;
+}
+
+.nube-1 {
+  top: 12%;
+  left: -10%;
+}
+
+.nube-2 {
+  top: 58%;
+  right: -12%;
+  animation-delay: -12s;
+}
+
+.nube-3 {
+  top: 38%;
+  left: 18%;
+  width: clamp(90px, 20vw, 160px);
+  opacity: 0.7;
+  animation-delay: -22s;
+}
+
+
+/* ---- 3.3 Pequeños planetas ---- */
+.planeta {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: inset -8px -6px 14px rgba(0, 0, 0, 0.15);
+  opacity: 0.9;
+  animation: flotar 8s ease-in-out infinite;
+}
+
+.planeta-1 {
+  width: clamp(34px, 8vw, 56px);
+  aspect-ratio: 1;
+  left: 6%;
+  top: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffc6e4, #e89ad0);
+}
+
+.planeta-2 {
+  width: clamp(22px, 5vw, 34px);
+  aspect-ratio: 1;
+  right: 12%;
+  bottom: 30%;
+  background: radial-gradient(circle at 35% 35%, #e0d2ff, #9d84d6);
+  animation-delay: -3s;
+}
+
+/* Planeta con anillo que se mueve suavemente */
+.planeta-3 {
+  width: clamp(40px, 9vw, 62px);
+  aspect-ratio: 1;
+  right: 28%;
+  top: 6%;
+  background: radial-gradient(circle at 35% 35%, #d2f1ff, #90b8e8);
+  animation-delay: -5s;
+}
+
+.planeta-3::before {
+  content: "";
+  position: absolute;
+  left: -40%;
+  top: 42%;
+  width: 180%;
+  height: 30%;
+  border: 3px solid rgba(255, 230, 245, 0.5);
+  border-radius: 50%;
+  transform: rotate(-18deg);
+  animation: balanceo 9s ease-in-out infinite;
+}
+
+
+/* ---- 3.4 Luna grande ---- */
+.luna {
+  position: absolute;
+  top: 9%;
+  right: 8%;
+  z-index: 2;
+  width: clamp(72px, 20vw, 130px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: auto;
+  background: radial-gradient(circle at 35% 30%, #fffdf8 0%, #fff0f7 45%, #f6d1e6 80%, #e9bfe0 100%);
+  box-shadow: 0 0 30px rgba(255, 220, 240, 0.7), 0 0 80px rgba(220, 190, 255, 0.5);
+  animation: flotar 7s ease-in-out infinite;
+  transition: filter 0.4s ease;
+}
+
+/* Halo suave que respira alrededor de la luna */
+.luna::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 230, 245, 0.35), transparent 65%);
+  animation: respirar 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Cráteres suaves */
+.luna::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 62%, rgba(200, 150, 190, 0.25) 0 8%, transparent 9%),
+    radial-gradient(circle at 66% 34%, rgba(200, 150, 190, 0.2) 0 6%, transparent 7%),
+    radial-gradient(circle at 56% 72%, rgba(200, 150, 190, 0.2) 0 5%, transparent 6%);
+  pointer-events: none;
+}
+
+.luna:hover,
+.luna:focus-visible {
+  filter: brightness(1.08);
+}
+
+
+/* ---- 3.5 Estrellas decorativas de fondo (las crea app.js) ---- */
+.estrella-deco {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.2;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+  animation: brillar var(--dur, 5s) ease-in-out var(--del, 0s) infinite;
+}
+
+
+/* ---- 3.6 Estrellas interactivas (las crea app.js) ---- */
+.estrella-btn {
+  position: absolute;
+  width: 46px;                      /* Área táctil cómoda para el dedo */
+  height: 46px;
+  transform: translate(-50%, -50%); /* El centro queda en la posición calculada */
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  border-radius: 50%;
+}
+
+.estrella-btn .nucleo {
+  position: relative;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, #ffe6f4 40%, transparent 72%);
+  box-shadow: 0 0 10px 3px rgba(255, 220, 240, 0.8), 0 0 24px 8px rgba(220, 190, 255, 0.5);
+  animation: parpadeo 3.2s ease-in-out infinite;
+  transition: transform 0.35s ease;
+}
+
+/* Destellos en cruz alrededor de la estrella */
+.estrella-btn::before,
+.estrella-btn::after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.estrella-btn::before {
+  width: 30px;
+  height: 1px;
+}
+
+.estrella-btn::after {
+  width: 1px;
+  height: 30px;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+}
+
+/* Estrellas que brillan de forma distinta */
+.estrella-btn.brillante .nucleo {
+  width: 17px;
+  height: 17px;
+  animation: destello 2.2s ease-in-out infinite;
+}
+
+.estrella-btn.brillante::before,
+.estrella-btn.brillante::after {
+  opacity: 0.85;
+  animation: parpadeo 2.2s ease-in-out infinite;
+}
+
+.estrella-btn:hover .nucleo,
+.estrella-btn:focus-visible .nucleo {
+  transform: scale(1.35);
+}
+
+/* Pequeño pulso al tocarla */
+.estrella-btn.tocada .nucleo {
+  transform: scale(1.7);
+}
+
+
+/* ---- 3.7 Corazones flotantes (los crea app.js) ---- */
+.corazon {
+  position: absolute;
+  bottom: -40px;
+  font-size: var(--tam, 16px);
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: subir-corazon var(--dur, 9s) ease-in forwards;
+}
+
+
+/* ---- 3.8 Estrellas fugaces (las crea app.js) ---- */
+.fugaz {
+  position: absolute;
+  width: clamp(80px, 18vw, 130px);
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), #ffffff, #ffd1e3);
+  rotate: 30deg;
+  opacity: 0;
+  pointer-events: none;
+  animation: fugaz 1.8s ease-out forwards;
+}
+
+
+/* ---- 3.9 Mensaje final, integrado en la parte inferior ---- */
+.mensaje-final {
+  position: relative;
+  z-index: 4;
+  margin-top: auto;                 /* Se queda abajo del universo */
+  padding: clamp(48px, 10vh, 90px) 22px clamp(28px, 6vh, 56px);
+  text-align: center;
+  background: linear-gradient(to bottom, transparent, rgba(27, 31, 63, 0.85) 60%);
+}
+
+.frase-final {
+  max-width: 640px;
+  margin: 0 auto;
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.5rem, 5.5vw, 2.4rem);
+  line-height: 1.3;
+  color: #ffe3f0;
+  text-shadow: 0 2px 16px rgba(255, 150, 200, 0.55);
+  overflow-wrap: break-word;
+}
+
+.latido {
+  display: inline-block;
+  animation: latido 1.8s ease-in-out infinite;
+}
+
+.firma-final {
+  margin-top: 10px;
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  color: #dcc8ff;
+  letter-spacing: 0.3px;
+}
+
+
+/* ---------- 4. TARJETA DE MENSAJES (estrellas y luna) ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 18, 45, 0.55);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.overlay.abierto {
+  opacity: 1;
+}
+
+.tarjeta {
+  position: relative;
+  width: min(88vw, 380px);
+  max-height: 80dvh;
+  overflow-y: auto;
+  padding: 36px 24px 26px;
+  border-radius: 26px;
+  background: linear-gradient(160deg, rgba(255, 240, 248, 0.97), rgba(230, 215, 255, 0.95));
+  color: var(--texto);
+  text-align: center;
+  overflow-wrap: anywhere;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 0 40px rgba(255, 180, 220, 0.4);
+  transform: translateY(24px) scale(0.88);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2), opacity 0.4s ease;
+}
+
+.overlay.abierto .tarjeta {
+  transform: none;
+  opacity: 1;
+}
+
+.tarjeta-texto p {
+  font-size: clamp(1rem, 3.8vw, 1.1rem);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+/* Texto de las tarjetas de estrella */
+.tarjeta-texto .mensaje-estrella {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.5rem, 5.5vw, 1.9rem);
+  line-height: 1.4;
+  color: #7a4f9e;
+}
+
+.tarjeta-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: #6a4a8a;
+  background: rgba(255, 214, 234, 0.75);
+  z-index: 1;
+}
+
+/* Tarjeta especial de la luna: más grande y con brillo */
+.tarjeta-luna {
+  width: min(90vw, 460px);
+  padding: 44px 28px 34px;
+  background: radial-gradient(circle at 50% 0%, #fff8fc 0%, #ead9ff 55%, #c9b5f5 100%);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.tarjeta-luna::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.6), transparent 55%);
+  animation: brillo-luna 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.tarjeta-luna p.texto-luna {
+  position: relative;
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.25rem, 4.8vw, 1.6rem);
+  line-height: 1.5;
+  color: #4a3672;
+  margin-bottom: 14px;
+}
+
+.tarjeta-luna .firma-luna {
+  font-size: clamp(1.6rem, 6vw, 2.1rem) !important;
+  color: #e0558e !important;
+  text-shadow: 0 2px 12px rgba(255, 160, 205, 0.6);
+  margin-top: 8px;
+}
+
+
+/* ---------- 5. BOTÓN FLOTANTE DE MÚSICA ---------- */
+.btn-musica {
+  position: fixed;
+  left: max(16px, env(safe-area-inset-left));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 60;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 1.35rem;
+  color: #fff;
+  background: rgba(255, 214, 234, 0.2);
+  border: 1px solid rgba(255, 214, 234, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.btn-musica:hover,
+.btn-musica:focus-visible {
+  transform: scale(1.08);
+  background: rgba(255, 214, 234, 0.32);
+}
+
+/* Anillo que pulsa mientras suena la canción */
+.btn-musica::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 190, 225, 0.6);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn-musica.sonando::after {
+  animation: pulso-musica 2.4s ease-out infinite;
+}
+
+.btn-musica.sonando .icono-musica {
+  animation: flotar 2.4s ease-in-out infinite;
+}
+
+
+/* ---------- 6. ANIMACIONES ---------- */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes flotar {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+@keyframes latido-suave {
+  0%, 100% { box-shadow: 0 8px 24px rgba(255, 170, 220, 0.35); }
+  50%      { box-shadow: 0 8px 34px rgba(255, 170, 220, 0.6); }
+}
+
+@keyframes respirar {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.7;  transform: scale(1.06); }
+}
+
+@keyframes deslizar {
+  from { transform: translateX(-30px); }
+  to   { transform: translateX(30px); }
+}
+
+@keyframes balanceo {
+  0%, 100% { transform: rotate(-18deg); }
+  50%      { transform: rotate(-10deg); }
+}
+
+@keyframes brillar {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50%      { opacity: 0.9;  transform: scale(1.2); }
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 0.75; }
+  50%      { opacity: 1; }
+}
+
+@keyframes destello {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.35); }
+}
+
+@keyframes pulso-musica {
+  0%   { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(1.6); }
+}
+
+@keyframes latido {
+  0%, 100% { transform: scale(1); }
+  15%      { transform: scale(1.25); }
+  30%      { transform: scale(1); }
+}
+
+@keyframes brillo-luna {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+/* Corazón: sube, se mece y desaparece */
+@keyframes subir-corazon {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate3d(var(--deriva, 20px), -55vh, 0) rotate(15deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(var(--deriva, 20px) * -1), -110vh, 0) rotate(-10deg);
+  }
+}
+
+/* Estrella fugaz: cruza el cielo en diagonal */
+@keyframes fugaz {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 260px 150px;
+  }
+}
+
+
+/* ---------- 7. ADAPTACIÓN A CELULARES Y TABLETS ---------- */
+@media (max-width: 600px) {
+  .btn-musica {
+    width: 48px;
+    height: 48px;
+  }
+
+  .mensaje-final {
+    padding-bottom: 96px;           /* Deja espacio para el botón de música */
+  }
+
+  .estrella-btn {
+    width: 48px;                    /* Un poco más grande para tocar con el pulgar */
+    height: 48px;
+  }
+}
+
+@media (min-width: 900px) {
+  .frase-final {
+    font-size: 2.6rem;
+  }
+}
+
+
+/* ---------- 8. MOVIMIENTO REDUCIDO ----------
+   Si el dispositivo pide menos animaciones, se detienen las
+   animaciones largas y no se generan corazones ni estrellas fugaces. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  #capa-corazones,
+  #capa-fugaces {
+    display: none;
+  }
+}
